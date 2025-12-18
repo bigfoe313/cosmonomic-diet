@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <title>Cosmonomic Diet</title>
+    
+    <script>
+        function reloadIframe() {
+            var iframe = document.getElementById('spiritual-diet-iframe');
+            iframe.src = iframe.src;
+        }
+    </script>
+    <style>
+    #newverse {
+      font-size: 16px; /* Increase font size */
+  	  border-radius: 5px; /* Set border radius */
+    }
+        iframe {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+	</style>
+    
+</head>
+
+<body>
+
+<h1 style="font-size: 36px; font-weight: bold; text-align: center; color: green; margin-bottom: 0;">Cosmonomic Diet</h1>
+
+<p id="heading" style="font-style:italic; text-align: center; margin-top: 0;">Powered by AI, backed by Science</p><br>
+
+    <!-- Further Code Herre -->    
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+
+    <script src="script.js"></script>
+    
+<script>
+$(document).ready ( function() {
+$("input").on("input", function (event) {
+    var parameterName = $(this).attr("id").split("calc-")[1];
+    var centimeters = $(this).val()
+
+    switch (parameterName) {
+        case "height":
+            $("#calc-height_value").html("Height: " + parseInt(centimeters/2.54/12) + " feet " + (parseInt(centimeters/2.54) - parseInt(centimeters/2.54/12)*12) + " inches");
+            break;
+        case "weight":
+            var kg = $(this).val();
+            $("#calc-weight_value").html("Current Weight: " + parseInt(kg*2.2) + " lb");
+            break;
+        case "age":
+            $("#calc-age_value").html("Age: " + $(this).val());
+            break;
+        case "cardio":
+            $("#calc-cardio_value").html("Exercise Frequency during Past Week: <br>" + ($(this).val() == 1 ? "Light exercise 1-3 days" : ($(this).val() == 2 ? "Moderate exercise 3-5 days" : ($(this).val() == 3 ? "Hard exercise 6-7 days" : "Extreme exercise routine"))));
+            break;
+        case "walking":
+            $("#calc-walking_value").html("Excercise Today ?: " + ($(this).val() == 1 ? "Yes" : "No"));
+            break;
+    }
+
+    var height = parseInt($("#calc-height").val(), 10);
+    var age = parseInt($("#calc-age").val(), 10);
+    var weight = parseInt($("#calc-weight").val(), 10);
+    var target = parseInt($("#calc-target").val(), 10);
+    var walking = parseInt($("#calc-walking").val(), 10);
+    var cardio = parseInt($("#calc-cardio").val(), 10);
+    var gender = $(".calculator input[name='gender']:checked").val();
+
+    // The Harris–Benedict equations revised by Mifflin and St Jeor in 1990: 'A new predictive equation for resting energy expenditure in healthy individuals'
+    var bmr = parseInt(10 * weight + 6.25 * height - 5 * age, 10) + (gender === "male" ? 5 : -161);
+    bmr = bmr * 1.2 * ($("#no").is(":checked") ? 1 : ($("#calc-cardio").val() === "1" ? 1.375/1.2 : ($("#calc-cardio").val() === "2" ? 1.55/1.2 : ($("#calc-cardio").val() === "3" ? 1.725/1.2 : 1.90/1.2))));
+
+    //bmr += walking * 60 * (.03 * weight * 1 / 0.45) / 7;
+    //bmr += cardio * 60 * (.07 * weight * 1 / 0.45) / 7;
+    //bmr = Math.floor(bmr);
+
+    var targetGainWeight = Math.round(bmr);
+    var targetMaintain = Math.round((bmr) / 100) * 100;
+    var targetLoseWeight = Math.round((bmr - 500) / 100) * 100;
+    var targetWeight = parseFloat((24.9 *((height/2.54)**2))/703);
+    console.log("weight target " + targetWeight)
+    
+// Get the current date and time
+const now = new Date();
+
+// Extract the current hour and minute
+const currentHour = now.getHours();
+const currentMinute = now.getMinutes();
+
+// Define the start and end times for each block
+const blocks = [
+  { name: "block1", startHour: 7, startMinute: 30, endHour: 8, endMinute: 0 },
+  { name: "block2", startHour: 11, startMinute: 0, endHour: 11, endMinute: 30 },
+  { name: "block3", startHour: 11, startMinute: 30, endHour: 12, endMinute: 0 },
+  { name: "block4", startHour: 12, startMinute: 0, endHour: 12, endMinute: 30 },
+  { name: "block5", startHour: 17, startMinute: 0, endHour: 17, endMinute: 30 }
+];
+
+// Function to check if the current time is within a specific block
+function isWithinBlock(block) {
+  const startMinutes = block.startHour * 60 + block.startMinute;
+  const endMinutes = block.endHour * 60 + block.endMinute;
+  const currentMinutes = currentHour * 60 + currentMinute;
+  return currentMinutes >= startMinutes && currentMinutes <= endMinutes;
+}
+
+// Check if the current time is within block1
+const block1 = blocks[0];
+const block2 = blocks[1];
+const block3 = blocks[2];
+const block4 = blocks[3];
+const block5 = blocks[4];
+
+if (isWithinBlock(block5)) {
+  console.log(`The current time is within ${block5.name} (${block5.startHour}:${block5.startMinute}am-${block5.endHour}:${block5.endMinute}am).`);
+} else {
+  console.log(`The current time is not within ${block5.name} (${block5.startHour}:${block5.startMinute}am-${block5.endHour}:${block5.endMinute}am).`);
+}
+
+
+var availableCalories = targetGainWeight * (isWithinBlock(block1) ? 0.1 : (isWithinBlock(block2) ? 0.2 : (isWithinBlock(block3) ? 0.2 : (isWithinBlock(block4) ? 0.3 : (isWithinBlock(block5) ? 0.2 : 0)))));
+
+// Get the values from chat-container1 through chat-container6
+var value1 = parseInt(document.getElementById("chat-container1").innerText.trim()) || 0;
+var value2 = parseInt(document.getElementById("chat-container2").innerText.trim()) || 0;
+var value3 = parseInt(document.getElementById("chat-container3").innerText.trim()) || 0;
+var value4 = parseInt(document.getElementById("chat-container4").innerText.trim()) || 0;
+var value5 = parseInt(document.getElementById("chat-container5").innerText.trim()) || 0;
+var value6 = parseInt(document.getElementById("chat-container6").innerText.trim()) || 0;
+
+// Sum the values
+var sum = value1 + value2 + value3 + value4 + value5 + value6;
+
+// Output the sum
+console.log("Sum of values:", sum);
+
+
+    $("#calc-target-daily span").html(targetGainWeight);
+    $("#calc-target-available span").html(parseInt(availableCalories));
+	$("#calc-target-available-now span").html(parseInt($("#calc-target-available span").text()) - parseInt(sum));
+	$("#calc-total").html(parseInt($("#calc-target-daily span").text()));
+	$("#breakfast").html(parseInt(parseInt($("#calc-target-daily span").text())*0.1));
+	$("#lunch1").html(parseInt(parseInt($("#calc-target-daily span").text())*0.2));
+	$("#lunch2").html(parseInt(parseInt($("#calc-target-daily span").text())*0.2));
+	$("#dinner").html(parseInt(parseInt($("#calc-target-daily span").text())*0.2));
+	$("#lunch3").html(parseInt(parseInt($("#calc-target-daily span").text()) - parseInt($("#dinner").text()) -parseInt(parseInt($("#calc-target-daily span").text())*0.2) - parseInt(parseInt($("#calc-target-daily span").text())*0.2) - parseInt(parseInt($("#calc-target-daily span").text())*0.1)));
+    $("#calc-target").val(Math.round(targetWeight/2.2));
+	$("#calc-weight_target").text("Target Weight: " + Math.round(targetWeight) + " lb");
+    //$("#calc-target-lose span").html(targetLoseWeight);
+
+});
+
+/*
+if ('speechRecognition' in window || 'webkitSpeechRecognition' in window) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+
+    // Set properties for recognition
+    recognition.continuous = false; // Stop recognition when user stops speaking
+    recognition.lang = 'en-US'; // Set language
+
+    // Event listener for when speech is recognized
+    recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('voiceInput').value = transcript; // Set input value to recognized speech
+    };
+
+    // Event listener for errors
+    recognition.onerror = function(event) {
+        console.error('Speech recognition error:', event.error);
+    };
+
+    // Start recognition when input is focused
+    document.getElementById('voiceInput').addEventListener('focus', function() {
+        recognition.start();
+    });
+
+    // Stop recognition when input loses focus
+    document.getElementById('voiceInput').addEventListener('blur', function() {
+        recognition.stop();
+    });
+} else {
+    // Browser doesn't support Web Speech API
+    alert("Sorry, your browser doesn't support speech recognition.");
+}
+*/
+    // Get the radio buttons
+    var yesRadio = document.getElementById("yes");
+    var noRadio = document.getElementById("no");
+
+    // Get the element to unhide
+    var cardioElement = document.getElementById("calc-cardio");
+    var cardioLabel = document.getElementById("calc-cardio_value");
+
+    // Add event listener to the radio buttons
+    yesRadio.addEventListener("change", function() {
+        if (this.checked) {
+            cardioElement.style.display = "block";
+            cardioLabel.style.display = "block";
+        }
+    });
+
+    noRadio.addEventListener("change", function() {
+        if (this.checked) {
+            cardioElement.style.display = "none";
+            cardioLabel.style.display = "none";
+        }
+    });
+    
+/*    
+  const resetButton = document.getElementById('resetButton');
+
+  resetButton.addEventListener('click', function() {
+    for (let i = 1; i <= 6; i++) {
+      const voiceElement = document.getElementById(`voiceInput${i}`);
+      const quantityElement = document.getElementById(`Quantity${i}`);
+      voiceElement.value = ''; // Clear the value of the input
+      quantityElement.value = 1; // Clear the value of the input
+    }
+  });
+*/
+
+});
+
+
+</script>
+
+<script>
+// Function to fetch ChatGPT responses for a given input element
+// ✅ SAFE: calls Cloudflare Worker instead of OpenAI
+async function fetchChatResponse(inputId) {
+  try {
+    const food = document.getElementById(inputId).value.trim();
+    if (!food) return 0;
+
+    const response = await fetch(
+      "https://YOUR-WORKER-NAME.YOUR-ACCOUNT.workers.dev/calories",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ food })
+      }
+    );
+
+    const data = await response.json();
+    return parseInt(data.calories) || 0;
+
+  } catch (error) {
+    console.error("Worker error:", error);
+    return 0;
+  }
+}
+
+// Function to insert response into HTML element for a given input element
+async function insertResponse(inputId, containerId, quantityInputId, promptSuffix) {
+const container = document.getElementById(containerId);
+    const response = await fetchChatResponse(inputId);
+  const quantityValue = parseFloat(document.getElementById(quantityInputId).value);
+  const multipliedResponse = parseFloat(response) * quantityValue;
+  container.innerHTML = multipliedResponse;
+// Get the values from chat-container1 through chat-container6
+var value1 = parseInt(document.getElementById("chat-container1").innerText.trim()) || 0;
+var value2 = parseInt(document.getElementById("chat-container2").innerText.trim()) || 0;
+var value3 = parseInt(document.getElementById("chat-container3").innerText.trim()) || 0;
+var value4 = parseInt(document.getElementById("chat-container4").innerText.trim()) || 0;
+var value5 = parseInt(document.getElementById("chat-container5").innerText.trim()) || 0;
+var value6 = parseInt(document.getElementById("chat-container6").innerText.trim()) || 0;
+
+// Sum the values
+var sum = value1 + value2 + value3 + value4 + value5 + value6;
+
+// Output the sum
+console.log("Sum of values:", sum);
+
+
+	$("#calc-target-available-now span").html(parseInt($("#calc-target-available span").text()) - parseInt(sum));
+	$("#calc-total").html(parseInt($("#calc-target-daily span").text()));
+    $("#calc-target").val(parseInt(targetWeight/2.2));
+
+    
+// Assuming the value is stored in a variable named 'value'
+if (parseInt($("#calc-target-available-now span").text()) < 0) {
+            $("#calc-target-available-now span").css("color", "red");
+;
+} else {
+            $("#calc-target-available-now span").css("color", "black");
+;
+}
+
+}
+
+// Call the function to insert response for each input when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+  for (let i = 1; i <= 6; i++) {
+    const voiceInputId = `voiceInput${i}`;
+    const quantityInputId = `Quantity${i}`;
+    const containerId = `chat-container${i}`;
+    const promptSuffix = ''; // You can add a suffix if needed
+
+    // Attach event listener to input element with id="voiceInput[i]"
+    const voiceInputElement = document.getElementById(voiceInputId);
+    voiceInputElement.addEventListener('change', function() {
+      insertResponse(voiceInputId, containerId, quantityInputId, promptSuffix);
+    });
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  for (let i = 1; i <= 6; i++) {
+    const voiceInputId = `voiceInput${i}`;
+    const ContainerId = `chat-container${i}`;
+    const quantityInputId = `Quantity${i}`;
+    const container = document.getElementById(ContainerId);
+    const quantityInput = document.getElementById(quantityInputId);
+
+    // Attach event listener to Quantity input element
+    quantityInput.addEventListener('input', function(event) {
+    	if (!isNaN(parseFloat(quantityInput.value.trim()))) {
+        insertResponse(voiceInputId, ContainerId,quantityInputId)
+        }
+    });
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const resetButton = document.getElementById('resetButton');
+
+  resetButton.addEventListener('click', function() {
+    for (let i = 1; i <= 6; i++) {
+      const voiceElement = document.getElementById(`voiceInput${i}`);
+      const quantityElement = document.getElementById(`Quantity${i}`);
+      const chatElement = document.getElementById(`chat-container${i}`);
+      voiceElement.value = ''; // Clear the value of the input
+      quantityElement.value = 1; // Clear the value of the input
+      chatElement.textContent = 0; // Clear the value of the input
+      //$("#calc-target-available span").html(parseInt(availableCalories));
+      $("#calc-target-available-now span").html(parseInt($("#calc-target-available span").text()));
+    }
+  });
+});
+
+
+</script>
+
+<script>
+// Function to recalculate and update the values
+$(document).ready ( function() {
+function updateValues() {
+  // Get the values from chat-container1 through chat-container6
+  var value1 = parseInt(document.getElementById("chat-container1").innerText.trim()) || 0;
+  var value2 = parseInt(document.getElementById("chat-container2").innerText.trim()) || 0;
+  var value3 = parseInt(document.getElementById("chat-container3").innerText.trim()) || 0;
+  var value4 = parseInt(document.getElementById("chat-container4").innerText.trim()) || 0;
+  var value5 = parseInt(document.getElementById("chat-container5").innerText.trim()) || 0;
+  var value6 = parseInt(document.getElementById("chat-container6").innerText.trim()) || 0;
+
+  // Sum the values
+  var sum = value1 + value2 + value3 + value4 + value5 + value6;
+
+  // Debugging: Output the sum and values
+  console.log("Values:", value1, value2, value3, value4, value5, value6);
+  console.log("Sum of values:", sum);
+
+  // Calculate the new value for calc-target-available-now
+  var availableNowValue = parseInt($("#calc-target-available span").text()) - sum;
+  $("#calc-target-available-now span").html(availableNowValue);
+
+  // Update calc-total and calc-target (assuming targetWeight is defined)
+  var targetWeight = 150; // Example value, replace with actual logic
+  $("#calc-total").html(parseInt($("#calc-target-daily span").text()));
+  $("#calc-target").val(parseInt(targetWeight / 2.2));
+
+  // Change color based on value
+  if (availableNowValue < 0) {
+    $("#calc-target-available-now span").css("color", "red");
+  } else {
+    $("#calc-target-available-now span").css("color", "black");
+  }
+}
+
+// Function to observe changes in the span elements
+function observeChanges() {
+  var containers = [
+    document.getElementById("chat-container1"),
+    document.getElementById("chat-container2"),
+    document.getElementById("chat-container3"),
+    document.getElementById("chat-container4"),
+    document.getElementById("chat-container5"),
+    document.getElementById("chat-container6")
+  ];
+
+  var observer = new MutationObserver(function(mutationsList, observer) {
+    for (var mutation of mutationsList) {
+      if (mutation.type === 'childList' || mutation.type === 'characterData') {
+        console.log('Mutation detected:', mutation); // Debugging: log mutation details
+        updateValues();
+      }
+    }
+  });
+
+  var config = { childList: true, characterData: true, subtree: true };
+
+  containers.forEach(function(container) {
+    observer.observe(container, config);
+  });
+}
+
+// Start observing changes
+observeChanges();
+})
+</script>
+
+  <script>
+    function scrollToTable() {
+      document.getElementById('calorie-calendar').scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+  </script>
+  
+    <script>
+        function scrollToDiv() {
+            document.getElementById('meditation-procedure').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+  
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var spiritualRadioButton = document.getElementById('calc-spiritual');
+            if (spiritualRadioButton) {
+                spiritualRadioButton.addEventListener('change', function() {
+                    if (this.checked) {
+                        document.getElementById('caloric-diet').style.display = 'none';
+                        document.getElementById('male-gender').style.display = 'none';
+                        document.getElementById('female-gender').style.display = 'none';
+                        document.getElementById('spiritual-diet').style.display = 'block';
+                        document.getElementById('meditation-procedure').style.display = 'block';
+                        document.getElementById('heading').textContent = 'Powered by the Holy Spirit';
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var caloricRadioButton = document.getElementById('calc-caloric');
+            if (caloricRadioButton) {
+                caloricRadioButton.addEventListener('change', function() {
+                    if (this.checked) {
+                        document.getElementById('spiritual-diet').style.display = 'none';
+                        document.getElementById('meditation-procedure').style.display = 'none';
+                        document.getElementById('heading').textContent = 'Powered by AI, backed by Science';
+                        document.getElementById('caloric-diet').style.display = 'block';
+                         document.getElementById('male-gender').style.display = 'block';
+                        document.getElementById('female-gender').style.display = 'block';
+                   }
+                });
+            }
+        });
+    </script>
+
+    
+<style>
+:root {
+  --primary-color: #435fda;
+  --secondary-color: #d8415c;
+  --body-font-size: 16px;
+  --line-height: 1.5;
+  --content-width: 480px;
+  --background-color: #ffffff;
+  --background-color-secondary: #f8f8f9;
+  --text-color: #000000;
+  --text-color--muted: #71737f;
+  --line-color: #ededef;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --primary-color: #657bdb;
+    --primary-color--translucent: rgba(85, 106, 195, 0.3);
+    --secondary-color: #d93d59;
+    --background-color: #ffffff;
+    --background-color-secondary: #0f1424;
+    --text-color: #000000;
+    --text-color--muted: #838690;
+    --line-color: #D3D3D3;
+  }
+}
+
+html {
+  font-size: 100%;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+body {
+  font-family: "Geomanist", sans-serif;
+  font-size: var(--body-font-size);
+  line-height: var(--line-height);
+  padding: 0.5em 0.5em 2em 0.5em;
+  margin: 0;
+}
+
+.wrapper {
+  max-width: var(--content-width);
+  margin: calc(var(--line-height) * 0.5em) auto 0 auto;
+}
+
+.results {
+  margin-top: 0.5em;
+  text-align: center;
+}
+
+.results > div {
+  margin-bottom: 0.5em;
+}
+
+@media (min-width: 220px) {
+  :root {
+    --body-font-size: 18px;
+    --line-height: 1.5;
+  }
+
+  .results {
+    display: flex;
+    column-gap: 1em;
+  }
+  .results > div {
+    margin-bottom: 0;
+  }
+}
+
+.choose-gender {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 2em;
+}
+
+.choose-diet {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 2em;
+}
+
+.segmented-control {
+  flex: 1;
+  text-align: center;
+  line-height: 2em;
+  border: 1px solid var(--line-color);
+}
+
+.segmented-control:first-child {
+  border-radius: 0.5em 0 0 0.5em;
+}
+
+.segmented-control:last-child {
+  border-radius: 0 0.5em 0.5em 0;
+}
+
+.results {
+  color: var(--text-color--muted);
+}
+
+.results span {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+/* The crazy stuff that needs to be here for the custom input styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  margin: 18px 0;
+  width: 100%;
+  transition: all 0.265ms ease-out;
+}
+
+input[type="range"]:not(:last-of-type) {
+  margin-top: 0;
+  margin-bottom: 2.5em;
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  background: var(--line-color);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  box-shadow: 0 0 8px 1px var(--secondary-color),
+    0 0 16px 4px var(--background-color);
+  border: 3px solid #fff;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: var(--secondary-color);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -8px;
+}
+input[type="range"]:focus::-webkit-slider-runnable-track {
+  background: var(--secondary-color);
+}
+
+input[type="radio"] {
+  -webkit-appearance: none;
+  display: none;
+}
+
+.segmented-control input[type="radio"] + label {
+  border: 1px solid rgba(0, 0, 0, 0);
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+  color: var(--text-color--muted);
+}
+
+.segmented-control input[type="radio"]:checked + label {
+  background-color: var(--line-color);
+  width: 100%;
+  height: 100%;
+  display: block;
+  color: var(--text-color);
+}
+
+.segmented-control input[type="radio"]:focus + label {
+  border: 1px solid var(--secondary-color);
+}
+
+.segmented-control:first-child input[type="radio"]:checked + label {
+  border-radius: 0.5em 0 0 0.5em;
+}
+
+.segmented-control:last-child input[type="radio"]:checked + label {
+  border-radius: 0 0.5em 0.5em 0;
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background: var(--line-color);
+}
+
+input[type="range"]::-moz-range-thumb {
+  box-shadow: 0 0 8px 1px var(--secondary-color),
+    0 0 16px 4px var(--background-color);
+  border: 3px solid #fff;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: var(--secondary-color);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -8px;
+}
+
+    /* Style for exercise label */
+    .options {
+        cursor: pointer;
+        display: inline-block;
+        width: 80px; /* Adjust width as needed */
+        height: 40px; /* Adjust height as needed */
+        background-color: #ccc;
+        border-radius: 20px; /* Make it round */
+        text-align: center;
+        line-height: 40px;
+        font-family: "Geomanist", sans-serif;
+    }
+    
+    /* Style for checked state */
+    input[type="radio"]:checked + .options {
+        background-color: red;
+        color: white;
+        font-family: "Geomanist", sans-serif;
+    }
+    
+    /* Style for hidden element */
+    #calc-cardio {
+        display: none;
+    }
+    #calc-cardio_value {
+        display: none;
+    }
+ /*   
+    #calc-target-available-now {
+    color: black; /* Default font color */
+	}
+*/
+	#calc-target-available-now.negative {
+    color: red; /* Font color when value is negative */
+	}
+    
+    #resetButton {
+      font-size: 16px; /* Increase font size */
+  	  border-radius: 5px; /* Set border radius */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 1px;
+        text-align: left;
+    }
+    
+input[id="calc-target"]::-webkit-slider-thumb {
+  box-shadow: 0 0 8px 1px var(--secondary-color),
+    0 0 16px 4px var(--background-color);
+  border: 3px solid #fff;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: var(--background-color);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -8px;
+}
+
+  .scroll-link {
+    cursor: pointer;
+    color: blue;
+    //text-decoration: underline;
+  }
+  
+</style>
+    
+<div id="bmr-calculator" class="wrapper">
+    <div class="calculator">
+        <div class="choose-diet">
+            <div class="segmented-control"><input id="calc-caloric" type="radio" name="diet" value="Caloric"
+                    checked=""><label for="calc-caloric">Caloric Diet</label></div>
+            <div class="segmented-control">
+                <input id="calc-spiritual" type="radio" name="diet" value="Spiritual"><label
+                    for="calc-spiritual">Spiritual Diet</label>
+            </div>
+        </div>
+        
+        <div class="choose-gender">
+            <div id="male-gender" class="segmented-control"><input id="calc-gender-male" type="radio" name="gender" value="male"
+                    checked=""><label for="calc-gender-male">Male</label></div>
+            <div id="female-gender" class="segmented-control"><input id="calc-gender-female" type="radio" name="gender" value="female"><label for="calc-gender-female">Female</label>
+            </div>
+        </div>
+        <div id="caloric-diet">
+        <div>
+        <label for="calc-age" id="calc-age_value">Age: 35</label><br><br>
+        <input id="calc-age" type="range" value="35" min="13" max="100"><br><br>
+        <label for="calc-height" id="calc-height_value">Height: 5 feet 9 inches</label><br><br>
+        <input id="calc-height" type="range" value="175.26" min="121.92" max="215" step="2.54"><br><br>
+        <label for="calc-weight" id="calc-weight_value">Current Weight: 190 lb</label><br><br>
+        <input id="calc-weight" type="range" value="86.4" min="45.45" max="136.36" step="0.45">
+        <label for="calc-target" id="calc-weight_target">Target Weight: 168 lb</label><br><br>
+        <input id="calc-target" type="range" value="76.82" min="45.45" max="136.36" step="0.45"><br><br>
+        <label for="calc-walking" id="calc-walking_value">Exercise Today? </label>
+<!-- Exercise buttons -->
+<input type="radio" class="options" id="yes" name="yesno" value="Yes">
+<label for="yes" class="options">Yes</label>
+
+<input type="radio" id="no" name="yesno" value="no" checked>
+<label for="no" class="options">No</label>
+
+<br><br>
+        <label for="calc-cardio" id="calc-cardio_value">Exercise Frequency during Past Week: <br>Light exercise 1-3 days</label><br>
+        <input id="calc-cardio" type="range" value="1" min="1" max="4"><br>
+    </div>
+    
+    <div class="results">
+        <div id="calc-target-daily">
+            "Daily" Calories:<br>
+            <span>2140</span>
+        </div>
+        <div id="calc-target-available-now">
+            <p class="scroll-link" onclick="scrollToTable()" style="display: inline;">"Now" Calories:</p><br>
+            <span></span>
+        </div>
+	</div>    
+        <div hidden id="calc-target-available">
+            Calories Avail:
+            <span>0</span>
+        </div>
+    
+    <div class="results">
+        <div id="calc-target-gain">
+            Food Item:<br>
+            <input type="text" id="voiceInput1" placeholder="Speak or write here..." size="15" style="font-size:14px;">
+        </div>
+        <div id="calc-target-maintain">
+            Qty:<br>
+            <input type="text" id="Quantity1" size="1" style="text-align: center; font-size:14px;" value="1">
+        </div>
+        <div id="calc-target-lose">
+            Calories:<br>
+            <span id="chat-container1" contenteditable="true" style="border: 1px solid #ccc;">0</span>
+        </div>
+    </div>
+    <div class="results">
+        <div id="calc-target-gain">
+            Food Item:<br>
+            <input type="text" id="voiceInput2" placeholder="Speak or write here..." size="15" style="font-size:14px;">
+        </div>
+        <div id="calc-target-maintain">
+            Qty:<br>
+            <input type="text" id="Quantity2" size="1" style="text-align: center; font-size:14px;" value="1">
+        </div>
+        <div id="calc-target-lose">
+            Calories:<br>
+            <span id="chat-container2" contenteditable="true" style="border: 1px solid #ccc;">0</span>
+        </div>
+    </div>
+    <div class="results">
+        <div id="calc-target-gain">
+            Food Item:<br>
+            <input type="text" id="voiceInput3" placeholder="Speak or write here..." size="15" style="font-size:14px;">
+        </div>
+        <div id="calc-target-maintain">
+            Qty:<br>
+            <input type="text" id="Quantity3" size="1" style="text-align: center; font-size:14px;" value="1">
+        </div>
+        <div id="calc-target-lose">
+            Calories:<br>
+            <span id="chat-container3" contenteditable="true" style="border: 1px solid #ccc;">0</span>
+        </div>
+    </div>
+    <div class="results">
+        <div id="calc-target-gain">
+            Food Item:<br>
+            <input type="text" id="voiceInput4" placeholder="Speak or write here..." size="15" style="font-size:14px;">
+        </div>
+        <div id="calc-target-maintain">
+            Qty:<br>
+            <input type="text" id="Quantity4" size="1" style="text-align: center; font-size:14px;" value="1">
+        </div>
+        <div id="calc-target-lose">
+            Calories:<br>
+            <span id="chat-container4" contenteditable="true" style="border: 1px solid #ccc;">0</span>
+        </div>
+    </div>
+    <div class="results">
+        <div id="calc-target-gain">
+            Food Item:<br>
+            <input type="text" id="voiceInput5" placeholder="Speak or write here..." size="15" style="font-size:14px;">
+        </div>
+        <div id="calc-target-maintain">
+            Qty:<br>
+            <input type="text" id="Quantity5" size="1" style="text-align: center; font-size:14px;" value="1">
+        </div>
+        <div id="calc-target-lose">
+            Calories:<br>
+            <span id="chat-container5" contenteditable="true" style="border: 1px solid #ccc;">0</span>
+        </div>
+    </div>
+    <div class="results">
+        <div id="calc-target-gain">
+            Food Item:<br>
+            <input type="text" id="voiceInput6" placeholder="Speak or write here..." size="15" style="font-size:14px;"><br><br>
+            <button id="resetButton">Reset</button>
+        </div>
+        <div id="calc-target-maintain">
+            Qty:<br>
+            <input type="text" id="Quantity6" size="1" style="text-align: center; font-size:14px;" value="1">
+        </div>
+        <div id="calc-target-lose">
+            Calories:<br>
+            <span id="chat-container6" contenteditable="true" style="border: 1px solid #ccc;">0</span>
+        </div>
+    </div>
+    <br>
+
+<table id="calorie-calendar" style="border-collapse: inherit;">
+    <caption style="text-align:left; font-weight:bold; font-size:18px;">Calorie Calendar</caption>
+    <thead style="font-size:16px;">
+        <tr>
+            <th>Time</th>
+            <th style="text-align: center">Prob.</th>
+            <th style="text-align: center">%</th>
+            <th>Meal</th>
+            <th style="text-align: center">Calories</th>
+        </tr>
+    </thead>
+    <tbody style="font-size:15px;">
+        <tr>
+            <td>7:30-8:00am</td>
+            <td style="text-align: center">0.1</td>
+            <td style="text-align: center">10%</td>
+            <td>Breakfast</td>
+            <td id="breakfast" style="text-align: center">214</td>
+        </tr>
+        <tr>
+            <td>11:00-11:30am</td>
+            <td style="text-align: center">0.2</td>
+            <td rowspan="3" style="text-align: center">70%</td>
+            <td rowspan="3">Lunch</td>
+            <td id="lunch1" style="text-align: center">428</td>
+        </tr>
+        <tr>
+            <td>11:30-12:00pm</td>
+            <td style="text-align: center">0.2</td>
+             <td id="lunch2" style="text-align: center">428</td>
+       </tr>
+        <tr>
+            <td>12:00-12:30pm</td>
+            <td style="text-align: center">0.3</td>
+            <td id="lunch3" style="text-align: center">642</td>
+        </tr>
+        <tr>
+            <td>5:00-5:30pm</td>
+            <td style="text-align: center">0.2</td>
+            <td style="text-align: center">20%</td>
+            <td>Dinner</td>
+            <td id="dinner" style="text-align: center">428</td>
+        </tr>
+        <tr style="font-weight:bold;">
+            <td>Total</td>
+            <td style="text-align: center">1.0</td>
+            <td style="text-align: center">100%</td>
+            <td></td>
+            <td id="calc-total" style="text-align: center">2140</td>
+        </tr>
+    </tbody>
+</table>
+
+<p style="font-size:18px;">The Cosmonomic Diet is derived from a probability distribution that governs the 24-hour wake/sleep cycle. The caloric diet that governs food ingestion is complementary to the spiritual diet that governs scriptural ingestion as physical fitness and spiritual fitness go hand in hand. The main feeding time in the caloric diet is during lunch when 70% of daily calories are ingested, which allows sufficient time for food digestion before the evening diet and exercise routine of scriptural study and meditation.</p> 
+
+</div>
+
+<div id="spiritual-diet" hidden>
+    <!-- Further Code Herre -->    
+    <script src="https://code.jquery.com/jquery-3.6.3.js"
+        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+
+    <script src="script.js"></script>
+    
+    <!-- Button to refresh the iframe -->
+    <button id="newverse" style="display: block; margin: 0 auto;" onclick="reloadIframe()">New Verse</button>
+    <p onclick="scrollToDiv()" style="display: block; text-align: center; margin: 0 auto; padding-top: 15px; cursor: pointer; color: blue;">
+    Meditation Procedure
+</a>
+    <!-- Iframe with an assigned id -->
+    <iframe id="spiritual-diet-iframe" style="display: block; margin: 0 auto;" src="https://1drv.ms/x/c/1be873ae44c8b2ba/IQNxmbV1MTtgQ43EGQUqQyT3AYPQsvGRcxhVsbZ2qvPmhQ4" width="402" height="525" frameborder="0" scrolling="no"></iframe>
+</div>
+
+<div id="meditation-procedure" hidden>
+<p style="font-size:18px;">MEDITATION PROCEDURE <br>
+
+1) Sit in a chair in a quiet and dark place with the back in a straight, vertically upright position with no back support. <br>
+
+ 2) Placed hands in the lap with fingers loosely interlocked and with one thumb placed on the wrist of the opposite hand at the base of the other thumb where a pulse can be felt. <br>
+
+ 3) Take four or five slow breaths, breathing in and out as deeply as possible. <br>
+
+ 4) Begin inhaling for an 8-count and exhaling for an 8-count, where each count is two heartbeats. Use the thumb that is placed on the wrist to count an equal number of heartbeats while inhaling and exhaling. <br>
+
+ 5) After feeling a slight pulse of relief, alter the inhalation rate where the breath is held on the fourth count during inhalation, then inhalation continues on counts five through eight. Continue exhalation on an 8-count. <br>
+
+ 6) While breathing using the modified 8-count, begin focusing on a mental image associated with the lunar/cosmonomic cycle (see graphic above). <br>
+
+ 7) When thoughts and mental chatter begin to settle, stop the 8-count and begin to mentally recite the bible verse over and over again while maintaining focus on the mental image. Continue reciting scripture until it becomes possible to grasp the entire bible verse without reciting the individual words. <br>
+
+ 8) Stop scripture recitation and image visualization and make no effort to think, or not think, about any particular subject or object. Meditative trance occurs when the mind goes blank and there is a feeling like daydreaming except activity that is normally observed during a daydream is instead replaced with stillness and silence. 
+
+</p>
+</div>
+
+</body>
+
+</html>
