@@ -10,6 +10,20 @@
   // ===== Worker URL =====
   const WORKER_URL = "https://cosmonomic-ai.cosmonomic-ai.workers.dev/calories"; // <-- Replace this!
 
+ // ---- SAFELY IGNORE MICROSOFT OFFICE EMBED DISPOSE ERROR ----
+window.addEventListener("error", function (event) {
+  const msg = event?.message || "";
+
+  if (
+    msg.includes("EwaTS.vrs.js") ||
+    msg.includes("MicrosoftAjaxDS") ||
+    msg.includes("reading 'vh'")
+  ) {
+    event.preventDefault();
+    return false;
+  }
+});
+
   // ===== Helper Functions =====
 
   // Fetch calories from Cloudflare Worker with caching
@@ -127,3 +141,15 @@
     init();
   }
 })();
+
+// ---- PREVENT OFFICE IFRAME UNLOAD CRASH ----
+window.addEventListener("beforeunload", () => {
+  try {
+    const iframes = document.getElementsByTagName("iframe");
+    for (const iframe of iframes) {
+      iframe.src = "about:blank";
+    }
+  } catch (_) {
+    // intentionally ignored
+  }
+});
