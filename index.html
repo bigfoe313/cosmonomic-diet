@@ -10,7 +10,12 @@
     <link rel="stylesheet" href="style.css">
 
     <title>Cosmonomic Diet</title>
-    
+
+    <script>
+      // Shared global target weight (lb)
+      window.targetWeight = 0;
+    </script>
+
     <script>
         function reloadIframe() {
             var iframe = document.getElementById('spiritual-diet-iframe');
@@ -87,7 +92,7 @@ $("input").on("input", function (event) {
     var targetGainWeight = Math.round(bmr);
     var targetMaintain = Math.round((bmr) / 100) * 100;
     var targetLoseWeight = Math.round((bmr - 500) / 100) * 100;
-    var targetWeight = parseFloat((24.9 *((height/2.54)**2))/703);
+    window.targetWeight = parseFloat((24.9 * ((height / 2.54) ** 2)) / 703);
     console.log("weight target " + targetWeight)
     
 // Get the current date and time
