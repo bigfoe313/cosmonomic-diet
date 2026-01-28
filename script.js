@@ -1,4 +1,5 @@
 // Simple in-memory cache for repeated queries
+// Deploy to Github Pages
 const caloriesCache = {};
 
 async function getCalories() {
