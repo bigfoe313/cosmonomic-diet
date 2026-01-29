@@ -85,22 +85,19 @@
 		/* Food Item / Qty / Calories grid */
 		.results {
 		  display: grid;
-		  grid-template-columns: 2fr 1fr 1fr;
+		  grid-template-columns: 2fr 1fr 1fr; /* Food Item twice as wide as Qty & Calories */
 		  gap: 0.5em;
 		  margin-bottom: 0.5em;
 		}
 		
 		.results > div {
-		  display: grid;
-		  grid-template-rows: auto 2em;
-		  align-items: center;
+		  display: flex;
+		  flex-direction: column;
 		}
 		
 		.results > div label {
 		  font-weight: 500;
-		  min-height: 1.5em;
-		  line-height: 1.5em;
-		  white-space: nowrap;
+		  margin-bottom: 0.25em;
 		}
 		
 		.results > div input {
