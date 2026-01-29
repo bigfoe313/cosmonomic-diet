@@ -8,7 +8,7 @@
   let targetWeight = 150;
 
   // ===== Worker URL =====
-  const WORKER_URL = "https://cosmonomic-ai.cosmonomic-ai.workers.dev/calories"; // <-- Replace this!
+  const WORKER_URL = "https://cosmonomic-calories.cosmonomic-ai.workers.dev/calories"; // <-- Replace this!
 
  // ---- SAFELY IGNORE MICROSOFT OFFICE EMBED DISPOSE ERROR ----
 window.addEventListener("error", function (event) {
