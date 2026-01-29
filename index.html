@@ -16,249 +16,237 @@
       window.targetWeight = 0;
     </script>
 
-<style>
-:root {
-  --primary-color: #435fda;
-  --secondary-color: #d8415c;
-  --body-font-size: 16px;
-  --line-height: 1.5;
-  --content-width: 480px;
-  --background-color: #ffffff;
-  --background-color-secondary: #f8f8f9;
-  --text-color: #000000;
-  --text-color--muted: #71737f;
-  --line-color: #ededef;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --primary-color: #657bdb;
-    --primary-color--translucent: rgba(85, 106, 195, 0.3);
-    --secondary-color: #d93d59;
-    --background-color: #ffffff;
-    --background-color-secondary: #0f1424;
-    --text-color: #000000;
-    --text-color--muted: #838690;
-    --line-color: #D3D3D3;
-  }
-}
-
-html {
-  font-size: 100%;
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
-body {
-  font-family: "Geomanist", sans-serif;
-  font-size: var(--body-font-size);
-  line-height: var(--line-height);
-  padding: 0.5em;
-  margin: 0;
-}
-
-.wrapper {
-  max-width: var(--content-width);
-  margin: calc(var(--line-height) * 0.5em) auto 0 auto;
-}
-
-h1 {
-  font-size: 36px;
-  font-weight: bold;
-  text-align: center;
-  color: green;
-  margin-bottom: 0;
-}
-
-#heading {
-  font-style: italic;
-  text-align: center;
-  margin-top: 0;
-}
-
-/* ============================= */
-/* Food Item / Qty / Calories   */
-/* ============================= */
-
-.results {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 0.5em;
-  margin-bottom: 0.5em;
-  align-items: start;
-}
-
-.results > div {
-  display: grid;
-  grid-template-rows: 1.5em auto;
-}
-
-.results label {
-  font-weight: 500;
-}
-
-.results input {
-  width: 100%;
-  box-sizing: border-box;
-  height: 2em;
-  font-size: 14px;
-}
-
-/* ============================= */
-/* Radio buttons styled as pills */
-/* ============================= */
-
-.options {
-  cursor: pointer;
-  display: inline-block;
-  width: 80px;
-  height: 40px;
-  background-color: #ccc;
-  border-radius: 20px;
-  text-align: center;
-  line-height: 40px;
-  font-family: "Geomanist", sans-serif;
-}
-
-input[type="radio"]:checked + .options {
-  background-color: red;
-  color: white;
-}
-
-#calc-cardio,
-#calc-cardio_value {
-  display: none;
-}
-
-/* ============================= */
-/* Buttons */
-/* ============================= */
-
-#resetButton {
-  font-size: 16px;
-  border-radius: 5px;
-}
-
-/* ============================= */
-/* Slider styles */
-/* ============================= */
-
-input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  margin: 1em 0;
-}
-
-input[type="range"]:focus {
-  outline: none;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 6px;
-  cursor: pointer;
-  background: var(--line-color);
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  box-shadow: 0 0 8px 1px var(--secondary-color),
-              0 0 16px 4px var(--background-color);
-  border: 3px solid #fff;
-  height: 24px;
-  width: 24px;
-  border-radius: 50%;
-  background: var(--secondary-color);
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -8px;
-}
-
-input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: var(--secondary-color);
-}
-
-input[type="range"]::-moz-range-track {
-  width: 100%;
-  height: 6px;
-  background: var(--line-color);
-}
-
-input[type="range"]::-moz-range-thumb {
-  box-shadow: 0 0 8px 1px var(--secondary-color),
-              0 0 16px 4px var(--background-color);
-  border: 3px solid #fff;
-  height: 24px;
-  width: 24px;
-  border-radius: 50%;
-  background: var(--secondary-color);
-  cursor: pointer;
-}
-
-/* ============================= */
-/* Segmented control */
-/* ============================= */
-
-.segmented-control {
-  flex: 1;
-  text-align: center;
-  line-height: 2em;
-  border: 1px solid var(--line-color);
-}
-
-.segmented-control:first-child {
-  border-radius: 0.5em 0 0 0.5em;
-}
-
-.segmented-control:last-child {
-  border-radius: 0 0.5em 0.5em 0;
-}
-
-.segmented-control input[type="radio"] {
-  display: none;
-}
-
-.segmented-control input[type="radio"] + label {
-  display: block;
-  cursor: pointer;
-  color: var(--text-color--muted);
-}
-
-.segmented-control input[type="radio"]:checked + label {
-  background-color: var(--line-color);
-  color: var(--text-color);
-}
-
-/* ============================= */
-/* Tables */
-/* ============================= */
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1em;
-}
-
-th, td {
-  border: 1px solid black;
-  padding: 2px 4px;
-  text-align: left;
-}
-
-#calorie-calendar caption {
-  text-align: left;
-  font-weight: bold;
-  font-size: 18px;
-}
-
-/* ============================= */
-/* Links */
-/* ============================= */
-
-.scroll-link {
-  cursor: pointer;
-  color: blue;
-}
-</style>
+    <script>
+        function reloadIframe() {
+            var iframe = document.getElementById('spiritual-diet-iframe');
+            iframe.src = iframe.src;
+        }
+    </script>
+    <style>
+		:root {
+		  --primary-color: #435fda;
+		  --secondary-color: #d8415c;
+		  --body-font-size: 16px;
+		  --line-height: 1.5;
+		  --content-width: 480px;
+		  --background-color: #ffffff;
+		  --background-color-secondary: #f8f8f9;
+		  --text-color: #000000;
+		  --text-color--muted: #71737f;
+		  --line-color: #ededef;
+		}
+		
+		@media (prefers-color-scheme: light) {
+		  :root {
+		    --primary-color: #657bdb;
+		    --primary-color--translucent: rgba(85, 106, 195, 0.3);
+		    --secondary-color: #d93d59;
+		    --background-color: #ffffff;
+		    --background-color-secondary: #0f1424;
+		    --text-color: #000000;
+		    --text-color--muted: #838690;
+		    --line-color: #D3D3D3;
+		  }
+		}
+		
+		html {
+		  font-size: 100%;
+		  background-color: var(--background-color);
+		  color: var(--text-color);
+		}
+		
+		body {
+		  font-family: "Geomanist", sans-serif;
+		  font-size: var(--body-font-size);
+		  line-height: var(--line-height);
+		  padding: 0.5em;
+		  margin: 0;
+		}
+		
+		.wrapper {
+		  max-width: var(--content-width);
+		  margin: calc(var(--line-height) * 0.5em) auto 0 auto;
+		}
+		
+		h1 {
+		  font-size: 36px;
+		  font-weight: bold;
+		  text-align: center;
+		  color: green;
+		  margin-bottom: 0;
+		}
+		
+		#heading {
+		  font-style: italic;
+		  text-align: center;
+		  margin-top: 0;
+		}
+		
+		/* Food Item / Qty / Calories grid */
+		.results {
+		  display: grid;
+		  grid-template-columns: 2fr 1fr 1fr;
+		  gap: 0.5em;
+		  margin-bottom: 0.5em;
+		}
+		
+		.results > div {
+		  display: grid;
+		  grid-template-rows: auto 2em;
+		  align-items: center;
+		}
+		
+		.results > div label {
+		  font-weight: 500;
+		  min-height: 1.5em;
+		  line-height: 1.5em;
+		  white-space: nowrap;
+		}
+		
+		.results > div input {
+		  width: 100%;
+		  box-sizing: border-box;
+		  height: 2em;
+		  font-size: 14px;
+		}
+		
+		/* Radio buttons styled as options */
+		.options {
+		  cursor: pointer;
+		  display: inline-block;
+		  width: 80px;
+		  height: 40px;
+		  background-color: #ccc;
+		  border-radius: 20px;
+		  text-align: center;
+		  line-height: 40px;
+		  font-family: "Geomanist", sans-serif;
+		}
+		
+		input[type="radio"]:checked + .options {
+		  background-color: red;
+		  color: white;
+		}
+		
+		#calc-cardio,
+		#calc-cardio_value {
+		  display: none;
+		}
+		
+		/* Reset button style */
+		#resetButton {
+		  font-size: 16px;
+		  border-radius: 5px;
+		}
+		
+		/* Slider styles */
+		input[type="range"] {
+		  -webkit-appearance: none;
+		  width: 100%;
+		  margin: 1em 0;
+		}
+		
+		input[type="range"]:focus {
+		  outline: none;
+		}
+		
+		input[type="range"]::-webkit-slider-runnable-track {
+		  width: 100%;
+		  height: 6px;
+		  cursor: pointer;
+		  background: var(--line-color);
+		}
+		
+		input[type="range"]::-webkit-slider-thumb {
+		  box-shadow: 0 0 8px 1px var(--secondary-color),
+		              0 0 16px 4px var(--background-color);
+		  border: 3px solid #fff;
+		  height: 24px;
+		  width: 24px;
+		  border-radius: 50%;
+		  background: var(--secondary-color);
+		  cursor: pointer;
+		  -webkit-appearance: none;
+		  margin-top: -8px;
+		}
+		
+		input[type="range"]:focus::-webkit-slider-runnable-track {
+		  background: var(--secondary-color);
+		}
+		
+		input[type="range"]::-moz-range-track {
+		  width: 100%;
+		  height: 6px;
+		  background: var(--line-color);
+		}
+		
+		input[type="range"]::-moz-range-thumb {
+		  box-shadow: 0 0 8px 1px var(--secondary-color),
+		              0 0 16px 4px var(--background-color);
+		  border: 3px solid #fff;
+		  height: 24px;
+		  width: 24px;
+		  border-radius: 50%;
+		  background: var(--secondary-color);
+		  cursor: pointer;
+		}
+		
+		/* Segmented control styling */
+		.segmented-control {
+		  flex: 1;
+		  text-align: center;
+		  line-height: 2em;
+		  border: 1px solid var(--line-color);
+		}
+		
+		.segmented-control:first-child {
+		  border-radius: 0.5em 0 0 0.5em;
+		}
+		
+		.segmented-control:last-child {
+		  border-radius: 0 0.5em 0.5em 0;
+		}
+		
+		.segmented-control input[type="radio"] {
+		  display: none;
+		}
+		
+		.segmented-control input[type="radio"] + label {
+		  display: block;
+		  cursor: pointer;
+		  color: var(--text-color--muted);
+		}
+		
+		.segmented-control input[type="radio"]:checked + label {
+		  background-color: var(--line-color);
+		  color: var(--text-color);
+		}
+		
+		/* Table styling */
+		table {
+		  width: 100%;
+		  border-collapse: collapse;
+		  margin-top: 1em;
+		}
+		
+		th, td {
+		  border: 1px solid black;
+		  padding: 2px 4px;
+		  text-align: left;
+		}
+		
+		#calorie-calendar caption {
+		  text-align: left;
+		  font-weight: bold;
+		  font-size: 18px;
+		}
+		
+		/* Scroll link styling */
+		.scroll-link {
+		  cursor: pointer;
+		  color: blue;
+		}
+	</style>
     
 </head>
 
@@ -701,7 +689,279 @@ observeChanges();
         });
     </script>
 
-       
+    
+<style>
+:root {
+  --primary-color: #435fda;
+  --secondary-color: #d8415c;
+  --body-font-size: 16px;
+  --line-height: 1.5;
+  --content-width: 480px;
+  --background-color: #ffffff;
+  --background-color-secondary: #f8f8f9;
+  --text-color: #000000;
+  --text-color--muted: #71737f;
+  --line-color: #ededef;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --primary-color: #657bdb;
+    --primary-color--translucent: rgba(85, 106, 195, 0.3);
+    --secondary-color: #d93d59;
+    --background-color: #ffffff;
+    --background-color-secondary: #0f1424;
+    --text-color: #000000;
+    --text-color--muted: #838690;
+    --line-color: #D3D3D3;
+  }
+}
+
+html {
+  font-size: 100%;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+body {
+  font-family: "Geomanist", sans-serif;
+  font-size: var(--body-font-size);
+  line-height: var(--line-height);
+  padding: 0.5em 0.5em 2em 0.5em;
+  margin: 0;
+}
+
+.wrapper {
+  max-width: var(--content-width);
+  margin: calc(var(--line-height) * 0.5em) auto 0 auto;
+}
+
+.results {
+  margin-top: 0.5em;
+  text-align: center;
+}
+
+.results > div {
+  margin-bottom: 0.5em;
+}
+
+@media (min-width: 220px) {
+  :root {
+    --body-font-size: 18px;
+    --line-height: 1.5;
+  }
+
+  .results {
+    display: flex;
+    column-gap: 1em;
+  }
+  .results > div {
+    margin-bottom: 0;
+  }
+}
+
+.choose-gender {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 2em;
+}
+
+.choose-diet {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 2em;
+}
+
+.segmented-control {
+  flex: 1;
+  text-align: center;
+  line-height: 2em;
+  border: 1px solid var(--line-color);
+}
+
+.segmented-control:first-child {
+  border-radius: 0.5em 0 0 0.5em;
+}
+
+.segmented-control:last-child {
+  border-radius: 0 0.5em 0.5em 0;
+}
+
+.results {
+  color: var(--text-color--muted);
+}
+
+.results span {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+/* The crazy stuff that needs to be here for the custom input styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  margin: 18px 0;
+  width: 100%;
+  transition: all 0.265ms ease-out;
+}
+
+input[type="range"]:not(:last-of-type) {
+  margin-top: 0;
+  margin-bottom: 2.5em;
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  background: var(--line-color);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  box-shadow: 0 0 8px 1px var(--secondary-color),
+    0 0 16px 4px var(--background-color);
+  border: 3px solid #fff;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: var(--secondary-color);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -8px;
+}
+input[type="range"]:focus::-webkit-slider-runnable-track {
+  background: var(--secondary-color);
+}
+
+input[type="radio"] {
+  -webkit-appearance: none;
+  display: none;
+}
+
+.segmented-control input[type="radio"] + label {
+  border: 1px solid rgba(0, 0, 0, 0);
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+  color: var(--text-color--muted);
+}
+
+.segmented-control input[type="radio"]:checked + label {
+  background-color: var(--line-color);
+  width: 100%;
+  height: 100%;
+  display: block;
+  color: var(--text-color);
+}
+
+.segmented-control input[type="radio"]:focus + label {
+  border: 1px solid var(--secondary-color);
+}
+
+.segmented-control:first-child input[type="radio"]:checked + label {
+  border-radius: 0.5em 0 0 0.5em;
+}
+
+.segmented-control:last-child input[type="radio"]:checked + label {
+  border-radius: 0 0.5em 0.5em 0;
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background: var(--line-color);
+}
+
+input[type="range"]::-moz-range-thumb {
+  box-shadow: 0 0 8px 1px var(--secondary-color),
+    0 0 16px 4px var(--background-color);
+  border: 3px solid #fff;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: var(--secondary-color);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -8px;
+}
+
+    /* Style for exercise label */
+    .options {
+        cursor: pointer;
+        display: inline-block;
+        width: 80px; /* Adjust width as needed */
+        height: 40px; /* Adjust height as needed */
+        background-color: #ccc;
+        border-radius: 20px; /* Make it round */
+        text-align: center;
+        line-height: 40px;
+        font-family: "Geomanist", sans-serif;
+    }
+    
+    /* Style for checked state */
+    input[type="radio"]:checked + .options {
+        background-color: red;
+        color: white;
+        font-family: "Geomanist", sans-serif;
+    }
+    
+    /* Style for hidden element */
+    #calc-cardio {
+        display: none;
+    }
+    #calc-cardio_value {
+        display: none;
+    }
+ /*   
+    #calc-target-available-now {
+    color: black; /* Default font color */
+	}
+*/
+	#calc-target-available-now.negative {
+    color: red; /* Font color when value is negative */
+	}
+    
+    #resetButton {
+      font-size: 16px; /* Increase font size */
+  	  border-radius: 5px; /* Set border radius */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 1px;
+        text-align: left;
+    }
+    
+input[id="calc-target"]::-webkit-slider-thumb {
+  box-shadow: 0 0 8px 1px var(--secondary-color),
+    0 0 16px 4px var(--background-color);
+  border: 3px solid #fff;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: var(--background-color);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -8px;
+}
+
+  .scroll-link {
+    cursor: pointer;
+    color: blue;
+    //text-decoration: underline;
+  }
+  
+</style>
+    
 <div id="bmr-calculator" class="wrapper">
     <div class="calculator">
         <div class="choose-diet">
