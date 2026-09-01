@@ -245,12 +245,21 @@
 		  margin: 0;
 		}
 
-		#spiritual-diet-iframe {
-		  width: 100%;
-		  aspect-ratio: 402 / 525;
-		  height: auto;
+		.spiritual-diet-container {
+		    width: 480px;
+		    max-width: 100%;
+		    margin: 0 auto;
+		    overflow: hidden;
 		}
 		
+		#spiritual-diet-iframe {
+		    display: block;
+		    width: 800px;
+		    height: 577px;
+		    border: 0;
+		    transform: scale(0.6);
+		    transform-origin: top left;
+		}		
 	</style>
     
 </head>
@@ -1180,15 +1189,14 @@ input[id="calc-target"]::-webkit-slider-thumb {
     Meditation Procedure
 </a>
     <!-- Iframe with an assigned id -->
-	<iframe
-	  id="spiritual-diet-iframe"
-	  style="display: block; margin: 0 auto;"
-	  src="https://1drv.ms/x/c/1be873ae44c8b2ba/IQRxmbV1MTtgQ43EGQUqQyT3AYPQsvGRcxhVsbZ2qvPmhQ4"
-	  width="480"
-	  height="346"
-	  frameborder="0"
-	  scrolling="no">
-	</iframe>
+	<div class="spiritual-diet-container">
+	  <iframe
+	    id="spiritual-diet-iframe"
+	    src="https://1drv.ms/x/c/1be873ae44c8b2ba/IQRxmbV1MTtgQ43EGQUqQyT3AYPQsvGRcxhVsbZ2qvPmhQ4"
+	    frameborder="0"
+	    scrolling="no">
+	  </iframe>
+	</div>
 </div>
 <div id="meditation-procedure" hidden>
 <p style="font-size:18px;">MEDITATION PROCEDURE <br>
